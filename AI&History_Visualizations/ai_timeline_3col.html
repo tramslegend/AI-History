@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI History - 3 Column Timeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 3px solid #34495e;
+            padding-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .era-section {
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .era-header {
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .era-content {
+            padding: 0;
+        }
+
+        .milestone-card {
+            padding: 20px;
+            border-bottom: 1px solid #ecf0f1;
+            transition: background-color 0.2s ease;
+        }
+
+        .milestone-card:last-child {
+            border-bottom: none;
+        }
+
+        .milestone-card:hover {
+            background-color: #f8f9fa;
+        }
+
+        .milestone-year {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 6px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .milestone-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+
+        .milestone-description {
+            font-size: 0.9rem;
+            color: #5d6d7e;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .milestone-impact {
+            background: #ecf0f1;
+            padding: 8px;
+            border-radius: 4px;
+            font-style: italic;
+            color: #2c3e50;
+            font-size: 0.85rem;
+            border-left: 3px solid #bdc3c7;
+        }
+
+        /* Era-specific colors */
+        .foundations .era-header {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .early-ai .era-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .expert-systems .era-header {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .machine-learning .era-header {
+            background: linear-gradient(135deg, #27ae60, #229954);
+        }
+
+        .modern-ai .era-header {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .llm-era .era-header {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+        }
+
+        .summary-section {
+            grid-column: 1 / -1;
+            margin-top: 30px;
+            padding: 30px;
+            background: #34495e;
+            color: white;
+            border-radius: 12px;
+        }
+
+        .summary-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .summary-section p {
+            font-size: 1rem;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        /* Column distribution for better balance */
+        .column:nth-child(1) {
+            /* Foundations + Early AI (first part) */
+        }
+        
+        .column:nth-child(2) {
+            /* Early AI (second part) + Expert Systems + Machine Learning */
+        }
+        
+        .column:nth-child(3) {
+            /* Modern AI + LLMs */
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: none;
+                padding: 20px;
+            }
+            
+            .timeline-grid {
+                gap: 20px;
+            }
+            
+            .milestone-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .timeline-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .timeline-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>The Evolution of Artificial Intelligence</h1>
+            <div class="subtitle">From Turing's Theoretical Machine to Modern AI Revolution</div>
+        </div>
+
+        <div class="timeline-grid">
+            <!-- Column 1: Foundations + Early AI (Part 1) -->
+            <div class="column">
+                <!-- Foundations Era -->
+                <div class="era-section foundations">
+                    <div class="era-header">Foundations (1936-1949)</div>
+                    <div class="era-content">
+                        <div class="milestone-card">
+                            <div class="milestone-year">1936</div>
+                            <div class="milestone-title">Turing Machine</div>
+                            <div class="milestone-description">Alan Turing introduces the theoretical foundation of computation with his abstract machine concept.</div>
+                            <div class="milestone-impact">Impact: Established the mathematical basis for all modern computing and algorithmic thinking.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">1943</div>
+                            <div class="milestone-title">Neural Network Model</div>
+                            <div class="milestone-description">McCulloch and Pitts create the first mathematical model of artificial neurons.</div>
+                            <div class="milestone-impact">Impact: Laid the groundwork for all future machine learning and neural network research.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Early AI Era (Part 1) -->
+                <div class="era-section early-ai">
+                    <div class="era-header">Early AI (1950-1969) - Part 1</div>
+                    <div class="era-content">
+                        <div class="milestone-card">
+                            <div class="milestone-year">1950</div>
+                            <div class="milestone-title">Turing Test</div>
+                            <div class="milestone-description">Alan Turing proposes a test for machine intelligence based on conversational ability.</div>
+                            <div class="milestone-impact">Impact: Created the philosophical benchmark for artificial intelligence that remains relevant today.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">1951</div>
+                            <div class="milestone-title">AI Game Programs</div>
+                            <div class="milestone-description">First AI programs capable of strategic thinking emerge, focusing on games like checkers.</div>
+                            <div class="milestone-impact">Impact: Demonstrated that machines could engage in strategic reasoning and planning.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">1956</div>
+                            <div class="milestone-title">Dartmouth Summer Research Project</div>
+                            <div class="milestone-description">The term "Artificial Intelligence" is coined, officially establishing AI as an academic discipline.</div>
+                            <div class="milestone-impact">Impact: Birth of AI as a formal field of study, attracting researchers and funding worldwide.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Early AI (Part 2) + Expert Systems + Machine Learning -->
+            <div class="column">
+                <!-- Early AI Era (Part 2) -->
+                <div class="era-section early-ai">
+                    <div class="era-header">Early AI (1950-1969) - Part 2</div>
+                    <div class="era-content">
+                        <div class="milestone-card">
+                            <div class="milestone-year">1958</div>
+                            <div class="milestone-title">Lisp Language</div>
+                            <div class="milestone-description">John McCarthy creates Lisp, the first programming language designed for AI research.</div>
+                            <div class="milestone-impact">Impact: Enabled symbolic reasoning and became the foundation for decades of AI programming.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">1965</div>
+                            <div class="milestone-title">ELIZA</div>
+                            <div class="milestone-description">Joseph Weizenbaum creates one of the first chatbots, simulating a psychotherapist.</div>
+                            <div class="milestone-impact">Impact: Demonstrated natural language processing potential and sparked debates about AI consciousness.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">1969</div>
+                            <div class="milestone-title">Shakey the Robot</div>
+                            <div class="milestone-description">First mobile robot capable of reasoning about its actions and environment.</div>
+                            <div class="milestone-impact">Impact: Combined AI reasoning with physical robotics, paving the way for autonomous systems.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expert Systems Era -->
+                <div class="era-section expert-systems">
+                    <div class="era-header">Expert Systems Era (1970-1989)</div>
+                    <div class="era-content">
+                        <div class="milestone-card">
+                            <div class="milestone-year">1972</div>
+                            <div class="milestone-title">SHRDLU</div>
+                            <div class="milestone-description">Terry Winograd's program demonstrates sophisticated natural language understanding in a block world.</div>
+                            <div class="milestone-impact">Impact: Advanced natural language processing and showed AI could understand context and commands.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">1980</div>
+                            <div class="milestone-title">Expert Systems Rise</div>
+                            <div class="milestone-description">Knowledge-based systems begin finding commercial applications across various industries.</div>
+                            <div class="milestone-impact">Impact: First major commercialization of AI, proving its practical business value.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">1986</div>
+                            <div class="milestone-title">Backpropagation Algorithm</div>
+                            <div class="milestone-description">Rumelhart, Hinton, and Williams popularize the algorithm for training multi-layer neural networks.</div>
+                            <div class="milestone-impact">Impact: Revolutionized neural network training, enabling deep learning decades later.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Machine Learning Rise -->
+                <div class="era-section machine-learning">
+                    <div class="era-header">Machine Learning Rise (1990-2009)</div>
+                    <div class="era-content">
+                        <div class="milestone-card">
+                            <div class="milestone-year">1997</div>
+                            <div class="milestone-title">Deep Blue Wins</div>
+                            <div class="milestone-description">IBM's Deep Blue defeats world chess champion Garry Kasparov in a six-game match.</div>
+                            <div class="milestone-impact">Impact: Proved AI could surpass human expertise in complex strategic games, capturing global attention.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 3: Modern AI + LLMs -->
+            <div class="column">
+                <!-- Modern AI Era -->
+                <div class="era-section modern-ai">
+                    <div class="era-header">Deep Learning & Modern AI (2010-2019)</div>
+                    <div class="era-content">
+                        <div class="milestone-card">
+                            <div class="milestone-year">2011</div>
+                            <div class="milestone-title">Watson Wins Jeopardy!</div>
+                            <div class="milestone-description">IBM's Watson defeats human champions in the quiz show, demonstrating advanced natural language processing.</div>
+                            <div class="milestone-impact">Impact: Showcased AI's ability to understand and process human language at unprecedented levels.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">2012</div>
+                            <div class="milestone-title">AlexNet Wins ImageNet</div>
+                            <div class="milestone-description">Deep convolutional neural network dramatically improves image recognition accuracy.</div>
+                            <div class="milestone-impact">Impact: Sparked the deep learning revolution, transforming computer vision and AI research.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">2016</div>
+                            <div class="milestone-title">AlphaGo Defeats Lee Sedol</div>
+                            <div class="milestone-description">DeepMind's AI system beats world champion in the ancient game of Go using deep reinforcement learning.</div>
+                            <div class="milestone-impact">Impact: Demonstrated AI's mastery of intuitive, creative games previously thought impossible for machines.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">2017</div>
+                            <div class="milestone-title">Attention is All You Need</div>
+                            <div class="milestone-description">Google researchers introduce the Transformer architecture, revolutionizing natural language processing.</div>
+                            <div class="milestone-impact">Impact: Enabled modern language models like GPT and BERT, transforming AI's language capabilities.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LLMs & Public Chatbots Era -->
+                <div class="era-section llm-era">
+                    <div class="era-header">LLMs & Public Chatbots (2020-Present)</div>
+                    <div class="era-content">
+                        <div class="milestone-card">
+                            <div class="milestone-year">2020</div>
+                            <div class="milestone-title">GPT-3 Released</div>
+                            <div class="milestone-description">OpenAI releases a 175-billion parameter language model with unprecedented text generation abilities.</div>
+                            <div class="milestone-impact">Impact: Democratized advanced AI capabilities and sparked the current generative AI revolution.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">2022</div>
+                            <div class="milestone-title">ChatGPT Chatbot</div>
+                            <div class="milestone-description">In November 2022, OpenAI made its ChatGPT model available to the general public.</div>
+                            <div class="milestone-impact">Impact: ChatGPT's transformative impact on society at large was immediate.</div>
+                        </div>
+
+                        <div class="milestone-card">
+                            <div class="milestone-year">2023</div>
+                            <div class="milestone-title">AI Ethics & Regulation</div>
+                            <div class="milestone-description">Growing focus on responsible AI development, safety measures, and regulatory frameworks.</div>
+                            <div class="milestone-impact">Impact: Balancing AI innovation with safety, ethics, and societal considerations for sustainable development.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Section -->
+            <div class="summary-section">
+                <h3>The Journey Continues</h3>
+                <p>From Turing's theoretical machine in 1936 to today's sophisticated AI systems, this timeline represents humanity's persistent quest to create intelligent machines. Each milestone built upon previous discoveries, accelerating our progress toward artificial general intelligence. As we stand at the threshold of even more remarkable breakthroughs, the story of AI continues to unfold, promising to reshape every aspect of human society.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
